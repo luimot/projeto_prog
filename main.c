@@ -21,7 +21,7 @@
 
 #define RANDOM_SEED_OFFSET 400
 
-#define N_TESTES 20
+#define N_TESTES 8
 
 #define SALVA_INTERMEDIARIOS 1 /* Flag que diz se devemos salvar as imagens de teste. Desative se for rodar muitos testes! */
 
@@ -78,7 +78,6 @@ int main ()
             pior_teste = i;
         }
         img1->largura=img2->largura;
-        printf("%ldx%ld,%d e %ldx%ld,%d e %ldx%ld,%d\n",img1->largura,img1->altura,img1->n_canais,img2->largura,img2->altura,img2->n_canais,bg->largura,bg->altura,bg->n_canais);
         printf ("Distancia real: %.2f, Medida: %.2f, Erro: %.2f\n", distancia_real, distancia_medida, erro);
 
 		/* Salva (se necessário). */
