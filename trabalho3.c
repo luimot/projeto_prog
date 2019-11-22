@@ -43,9 +43,9 @@ double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int i){
 			}
 		}
 		interseccaoCanais(&outLimpa[im],&outLimpa[im]);
-		procuraBlob(outLimpa[1],xi,yi,xf,yf);
-		outLimpa[1].dados[0][*xi][*yi]=255;outLimpa[1].dados[1][*xi][*yi]=0;outLimpa[1].dados[2][*xi][*yi]=0;
-		outLimpa[1].dados[0][*xf][*yf]=255;outLimpa[1].dados[1][*xf][*yf]=0;outLimpa[1].dados[2][*xf][*yf]=0;
+		//procuraBlob(outLimpa[1],xi,yi,xf,yf);
+		//outLimpa[1].dados[0][*xi][*yi]=255;outLimpa[1].dados[1][*xi][*yi]=0;outLimpa[1].dados[2][*xi][*yi]=0;
+		//	outLimpa[1].dados[0][*xf][*yf]=255;outLimpa[1].dados[1][*xf][*yf]=0;outLimpa[1].dados[2][*xf][*yf]=0;
 		salvaImagem(&outLimpa[im],str[im]);
 		desalocaDados(&outLimpa[im]);
 	}
@@ -121,7 +121,7 @@ void procuraBlob(Imagem in,ul *xi,ul *yi, ul *xf,ul *yf){
 	ul size,aux,maior[3]={0};	//Maior armazena={tamanho,coord. Xf,coord. Yf}
 	for(ul i=tam;i<=in.altura-tam;i++){
 		size=0;
-		for(ul j=tam;j<=i;j++){
+		for(ul j=tam;j<=i && j<in.largura-tam;j++){
 			if(size==0 && in.dados[0][i-j][j]==255)
 				aux=j;
 			size += in.dados[0][i-j][j]==255;
