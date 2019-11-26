@@ -5,26 +5,29 @@
 #include "trabalho3.h"
 #include "imagem.h"
 
-typedef unsigned long ul;
-
 #define MAX 64
 #define V_MIN_TRESHOLD 30	//Valor mínimo para limpar campos com muito ruído no arquivo limpo //Entre 40-60 ta bom 
 #define TAM_JANELA 3
-#define THRESH_INTER 235
+#define THRESH_INTER 210
+#define PRETO 0
+#define BRANCO 255
+#define R 0
+#define G 1
+#define B 2
+
+#define SALVA_MODELOS 1
 
 void filtroMedia(Imagem* img, Imagem* out, int winSize);
 int mediaVizinhanca(Imagem* v,int x, int y,int t,int canal);
 void interseccaoCanais(Imagem* in,Imagem* out);
 void alocaDados(Imagem* x);
 void desalocaDados(Imagem* x);
-void procuraBlob(Imagem in,ul *xi,ul *yi, ul *xf,ul *yf);
+void procuraBlob(Imagem in,unsigned long *xi,unsigned long *yi, unsigned long *xf,unsigned long *yf);
+void filtroPonto(Imagem* img);
 
 double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int i){
 	Imagem *copia[2]={img1,img2};
-	ul *xi,*xf,*yi,*yf;
-	char str[2][MAX];
-	sprintf(str[0],"limpa-%d-1.bmp",i);
-	sprintf(str[1],"limpa-%d-2.bmp",i);	
+	unsigned long pos_i[2],pos_f[2];	
 	Imagem outLimpa[2];
 	filtroMedia(img1,img1,TAM_JANELA);
 	filtroMedia(img2,img2,TAM_JANELA);
@@ -42,19 +45,27 @@ double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int i){
 				}
 			}
 		}
+		filtroPonto(&outLimpa[im]);
 		interseccaoCanais(&outLimpa[im],&outLimpa[im]);
-		//procuraBlob(outLimpa[1],xi,yi,xf,yf);
-		//outLimpa[1].dados[0][*xi][*yi]=255;outLimpa[1].dados[1][*xi][*yi]=0;outLimpa[1].dados[2][*xi][*yi]=0;
-		//	outLimpa[1].dados[0][*xf][*yf]=255;outLimpa[1].dados[1][*xf][*yf]=0;outLimpa[1].dados[2][*xf][*yf]=0;
-		salvaImagem(&outLimpa[im],str[im]);
-		desalocaDados(&outLimpa[im]);
 	}
-	return 100.00;
+	if(SALVA_MODELOS){
+		char str[2][MAX];
+		sprintf(str[0],"limpa-%d-1.bmp",i);
+		sprintf(str[1],"limpa-%d-2.bmp",i);
+		salvaImagem(&outLimpa[0],str[0]);
+		salvaImagem(&outLimpa[1],str[1]);
+	}
+	pontoMedio(outLimpa[0],pos_i);
+	pontoMedio(outLimpa[1],pos_f);
+	printf("pos1 (%ld,%ld)\n pos2 (%ld,%ld)\ndist %f\n",pos_i[0],pos_i[1],pos_f[0],pos_f[1],sqrt( pow(pos_f[0]-pos_i[0],2)+ pow(pos_f[1]-pos_i[1],2) ));
+	desalocaDados(&outLimpa[0]);
+	desalocaDados(&outLimpa[1]);
+	return sqrt( pow(pos_f[0]-pos_i[0],2)+ pow(pos_f[1]-pos_i[1],2) );
 }
 
 void filtroMedia(Imagem* img, Imagem* out, int winSize){
 	int tam=winSize/2;	//Setta o tamanho para pular bordas
-	ul i,j;
+	unsigned long i,j;
 	for(int canal=0;canal<3;canal++){
 	for(i=tam;i<img->altura-tam;i++){
 		for(j=tam;j<img->largura-tam;j++){
@@ -79,8 +90,8 @@ void filtroMedia(Imagem* img, Imagem* out, int winSize){
 
 int mediaVizinhanca(Imagem* v,int x, int y,int t,int canal){
 	int media=0,tam=t/2;
-	for(ul i=x-tam;i<=x+tam;i++)
-		for(ul j=y-tam;j<=y+tam;j++)
+	for(unsigned long i=x-tam;i<=x+tam;i++)
+		for(unsigned long j=y-tam;j<=y+tam;j++)
 			media+=v->dados[canal][i][j];
 	return media/(t*t);
 }
@@ -88,11 +99,11 @@ int mediaVizinhanca(Imagem* v,int x, int y,int t,int canal){
 void interseccaoCanais(Imagem* in,Imagem* out){
 	for(int i=0;i<in->altura;i++){
 		for(int j=0;j<in->largura;j++){
-			if((in->dados[0][i][j] + in->dados[1][i][j] + in->dados[2][i][j])/3.0 < THRESH_INTER){
-				in->dados[0][i][j]=0;in->dados[1][i][j]=0;in->dados[2][i][j]=0;
+			if((in->dados[R][i][j] + in->dados[G][i][j] + in->dados[B][i][j])/3.0 < THRESH_INTER){
+				in->dados[R][i][j]=BRANCO;in->dados[G][i][j]=BRANCO;in->dados[B][i][j]=BRANCO;
 			}
 			else{
-				in->dados[0][i][j]=255;in->dados[1][i][j]=255;in->dados[2][i][j]=255;
+				in->dados[R][i][j]=PRETO;in->dados[G][i][j]=PRETO;in->dados[B][i][j]=PRETO;
 			}
 		}
 	}
@@ -102,38 +113,58 @@ void alocaDados(Imagem* x){
 	x->dados=(unsigned char***)malloc(sizeof(unsigned char**)*x->n_canais);
 		for(int i=0;i<x->n_canais;i++){
 			x->dados[i]=(unsigned char**)malloc(sizeof(unsigned char*)*x->altura);
-			for(ul j=0;j<x->altura;j++)
+			for(unsigned long j=0;j<x->altura;j++)
 				x->dados[i][j]=(unsigned char*)malloc(sizeof(unsigned char)*x->largura);
 		}
 }
 
 void desalocaDados(Imagem* x){
 	for (int i=0;i<x->n_canais;i++){
-			for (ul j=0;j<x->altura;j++)
+			for (unsigned long j=0;j<x->altura;j++)
 				free (x->dados[i][j]);
 			free (x->dados[i]);
 		}
 		free(x->dados);
 }
+void filtroPonto(Imagem* img){
+    int i,j;
+    for(i = 0 ; i < img->altura-2 ; i ++){
+        for(j = 0 ; j < img->largura-2 ; j ++){
+            if(img->dados[R][i][j] == BRANCO &&  img->dados[R][i+1][j+1] == PRETO){
+                img->dados[R][i][j] = PRETO;
+                img->dados[G][i][j] = PRETO;
+                img->dados[B][i][j] = PRETO;
+            }
+        }
+    }
 
-void procuraBlob(Imagem in,ul *xi,ul *yi, ul *xf,ul *yf){
-	int tam = TAM_JANELA/2;
-	ul size,aux,maior[3]={0};	//Maior armazena={tamanho,coord. Xf,coord. Yf}
-	for(ul i=tam;i<=in.altura-tam;i++){
-		size=0;
-		for(ul j=tam;j<=i && j<in.largura-tam;j++){
-			if(size==0 && in.dados[0][i-j][j]==255)
-				aux=j;
-			size += in.dados[0][i-j][j]==255;
-		}
-		if(size>maior[0]){
-			maior[0]=size;
-			maior[1]=i;
-			maior[2]=aux;
-		}
-	}
-	*xf=maior[1];
-	*yf=maior[2];
-	*xi=(*xf)-(unsigned long)maior[0]*sqrt(2)/2;
-	*yi=(*yf)-(unsigned long)maior[0]*sqrt(2)/2;
+}
+void pontoMedio(Imagem img,unsigned long *vet){
+    unsigned long i,j,ii,jj,cont=0;
+    unsigned long x[2]={0,img.largura},y[2]={0,img.altura};
+    //Checa se todos os vizinhos numa janela 5x5 sao pretos
+    //e sua coordenada i j sajam as maiores ou menores possiveis
+    //e em seguida salva esse ponto como referencia.
+    for(i = 2 ; i < img.altura-2 ; i++){
+        for(j = 2 ; j < img.largura-2 ; j ++){
+            for(ii = i-2 ; ii <= i +2 ; ii++){
+                for(jj = j - 2 ; jj <= j+2 ; jj++)
+                    cont += img.dados[0][ii][jj];
+            }
+            if(cont == 0){
+                if(i > y[0] && j > x[0]){
+                    x[0] = j;
+                    y[0] = i;
+                }
+                if(i < y[1] && j < x[1]){
+                    x[1] = j;
+                    y[1]= i;
+                }
+            }
+            cont=0;
+        }
+    }
+    //faz a media dos pontos de referencia
+    vet[0] = (y[0]+y[1])/2;
+    vet[1] = (x[0]+x[1])/2;
 }

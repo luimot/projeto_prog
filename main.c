@@ -21,7 +21,7 @@
 
 #define RANDOM_SEED_OFFSET 400
 
-#define N_TESTES 8
+#define N_TESTES 20
 
 #define SALVA_INTERMEDIARIOS 1 /* Flag que diz se devemos salvar as imagens de teste. Desative se for rodar muitos testes! */
 
@@ -62,7 +62,6 @@ int main ()
 		/* Invoca o testador. */
 		tempo_inicio = clock ();
 		distancia_medida = calculaDistancia (bg, img1, img2,i);
-		distancia_medida = 100;
 		tempo_total += clock () - tempo_inicio;
 
 		/* Compara os resultados com o que foi gerado. */
