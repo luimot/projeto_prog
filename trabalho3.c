@@ -143,7 +143,7 @@ void pontoMedio(Imagem img,unsigned long *vet){
     unsigned long i,j,ii,jj,cont=0;
     unsigned long x[2]={0,img.largura},y[2]={0,img.altura};
     //Checa se todos os vizinhos numa janela 5x5 sao pretos
-    //e sua coordenada i j sajam as maiores ou menores possiveis
+    //e sua coordenada i j sejam as maiores ou menores possiveis
     //e em seguida salva esse ponto como referencia.
     for(i = 2 ; i < img.altura-2 ; i++){
         for(j = 2 ; j < img.largura-2 ; j ++){
