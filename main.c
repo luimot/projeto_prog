@@ -19,11 +19,11 @@
  * imagens, então o offset precisa ser igual para todos. Entretanto, usaremos
  * um valor diferente na hora de testar os trabalhos de fato. */
 
-#define RANDOM_SEED_OFFSET 400
+#define RANDOM_SEED_OFFSET 4000
 
-#define N_TESTES 20
+#define N_TESTES 300
 
-#define SALVA_INTERMEDIARIOS 1 /* Flag que diz se devemos salvar as imagens de teste. Desative se for rodar muitos testes! */
+#define SALVA_INTERMEDIARIOS 0 /* Flag que diz se devemos salvar as imagens de teste. Desative se for rodar muitos testes! */
 
 /*============================================================================*/
 
@@ -46,7 +46,7 @@ int main ()
 	}
 
     /* Realiza N_TESTES testes. */
-	for (i = 0; i < N_TESTES; i++)
+	for (i = 1; i <= N_TESTES; i++)
 	{
 		printf ("----- Teste %d\n", i);
 
