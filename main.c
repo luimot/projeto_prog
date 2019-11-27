@@ -44,7 +44,8 @@ int main ()
 		printf ("Nao conseguiu carregar o gerador!\n");
 		return (1);
 	}
-
+	int cont2=0,cont5=0,cont20=0,cont100=0;
+	int pos2[N_TESTES]={0},pos5[N_TESTES]={0},pos20[N_TESTES]={0},pos100[N_TESTES]={0};
     /* Realiza N_TESTES testes. */
 	for (i = 1; i <= N_TESTES; i++)
 	{
@@ -70,6 +71,19 @@ int main ()
         else
             erro = distancia_real;
         erro_total += erro;
+
+        if(erro>=2 && erro<5){
+        	cont2++;pos2[cont2-1]=i;
+        }
+        else if(erro>=5 && erro<20){
+        	cont5++;pos5[cont5-1]=i;
+        }
+        else if(erro>=20 && erro<100){
+        	cont20++;pos20[cont20-1]=i;
+        }
+        else if(erro>=100){
+        	cont100++;pos100[cont100-1]=i;
+        }
 
         if (erro > maior_erro)
         {
@@ -101,7 +115,22 @@ int main ()
 	printf ("Erro medio: %.2f\n", erro_total / N_TESTES);
 	printf ("Pior teste: %d (erro: %.2f)\n", pior_teste, maior_erro);
 	printf ("Tempo total: %d\n", (int) tempo_total);
-
+	printf ("Erros maior que 2:%d Testes: ",cont2);
+	for(int x=0;pos2[x]!=0;x++)
+		printf("%d ",pos2[x]);
+	printf("\n");
+	printf ("Erros maior que 5:%d Testes: ",cont5);
+	for(int x=0;pos5[x]!=0;x++)
+		printf("%d ",pos5[x]);
+	printf("\n");
+	printf ("Erros maior que 20:%d Testes: ",cont20);
+	for(int x=0;pos20[x]!=0;x++)
+		printf("%d ",pos20[x]);
+	printf("\n");
+	printf ("Erros maior que 100:%d Testes: ",cont100);
+	for(int x=0;pos100[x]!=0;x++)
+		printf("%d ",pos100[x]);
+	printf("\n");
 	/* Final. */
 	destroiGeradorDeTestes (gerador);
 	return (0);

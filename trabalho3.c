@@ -16,7 +16,7 @@
 #define B 2
 #define LIM_PM 1
 
-#define SALVA_MODELOS 0		//Flag para salvar os modelos
+#define SALVA_MODELOS 1		//Flag para salvar os modelos
 
 void filtroMedia(Imagem* img, Imagem* out, int winSize);
 int mediaVizinhanca(Imagem* v,int x, int y,int t,int canal);

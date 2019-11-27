@@ -1,0 +1,612 @@
+----- Teste 1
+Distancia real: 5.00, Medida: 7.07, Erro: 2.07
+----- Teste 2
+Distancia real: 5.00, Medida: 33.38, Erro: 28.38
+----- Teste 3
+Distancia real: 229.00, Medida: 228.73, Erro: 0.27
+----- Teste 4
+Distancia real: 104.00, Medida: 117.00, Erro: 13.00
+----- Teste 5
+Distancia real: 28.00, Medida: 27.89, Erro: 0.11
+----- Teste 6
+Distancia real: 23.00, Medida: 21.26, Erro: 1.74
+----- Teste 7
+Distancia real: 150.00, Medida: 150.01, Erro: 0.01
+----- Teste 8
+Distancia real: 18.00, Medida: 18.36, Erro: 0.36
+----- Teste 9
+Distancia real: 294.00, Medida: 296.25, Erro: 2.25
+----- Teste 10
+Distancia real: 182.00, Medida: 179.48, Erro: 2.52
+----- Teste 11
+Distancia real: 37.00, Medida: 37.34, Erro: 0.34
+----- Teste 12
+Distancia real: 11.00, Medida: 10.63, Erro: 0.37
+----- Teste 13
+Distancia real: 258.00, Medida: 257.20, Erro: 0.80
+----- Teste 14
+Distancia real: 70.00, Medida: 69.29, Erro: 0.71
+----- Teste 15
+Distancia real: 169.00, Medida: 168.15, Erro: 0.85
+----- Teste 16
+Distancia real: 325.00, Medida: 331.08, Erro: 6.08
+----- Teste 17
+Distancia real: 63.00, Medida: 63.06, Erro: 0.06
+----- Teste 18
+Distancia real: 179.00, Medida: 180.32, Erro: 1.32
+----- Teste 19
+Distancia real: 36.00, Medida: 36.24, Erro: 0.24
+----- Teste 20
+Distancia real: 52.00, Medida: 52.17, Erro: 0.17
+----- Teste 21
+Distancia real: 134.00, Medida: 134.73, Erro: 0.73
+----- Teste 22
+Distancia real: 43.00, Medida: 42.95, Erro: 0.05
+----- Teste 23
+Distancia real: 167.00, Medida: 166.82, Erro: 0.18
+----- Teste 24
+Distancia real: 38.00, Medida: 36.36, Erro: 1.64
+----- Teste 25
+Distancia real: 116.00, Medida: 118.96, Erro: 2.96
+----- Teste 26
+Distancia real: 117.00, Medida: 115.28, Erro: 1.72
+----- Teste 27
+Distancia real: 243.00, Medida: 241.66, Erro: 1.34
+----- Teste 28
+Distancia real: 30.00, Medida: 30.41, Erro: 0.41
+----- Teste 29
+Distancia real: 73.00, Medida: 72.84, Erro: 0.16
+----- Teste 30
+Distancia real: 119.00, Medida: 119.87, Erro: 0.87
+----- Teste 31
+Distancia real: 207.00, Medida: 206.16, Erro: 0.84
+----- Teste 32
+Distancia real: 25.00, Medida: 33.54, Erro: 8.54
+----- Teste 33
+Distancia real: 235.00, Medida: 227.37, Erro: 7.63
+----- Teste 34
+Distancia real: 134.00, Medida: 137.28, Erro: 3.28
+----- Teste 35
+Distancia real: 47.00, Medida: 39.05, Erro: 7.95
+----- Teste 36
+Distancia real: 11.00, Medida: 11.18, Erro: 0.18
+----- Teste 37
+Distancia real: 35.00, Medida: 35.23, Erro: 0.23
+----- Teste 38
+Distancia real: 17.00, Medida: 16.16, Erro: 0.84
+----- Teste 39
+Distancia real: 29.00, Medida: 29.07, Erro: 0.07
+----- Teste 40
+Distancia real: 41.00, Medida: 38.90, Erro: 2.10
+----- Teste 41
+Distancia real: 96.00, Medida: 99.73, Erro: 3.73
+----- Teste 42
+Distancia real: 155.00, Medida: 154.50, Erro: 0.50
+----- Teste 43
+Distancia real: 417.00, Medida: 417.03, Erro: 0.03
+----- Teste 44
+Distancia real: 69.00, Medida: 68.96, Erro: 0.04
+----- Teste 45
+Distancia real: 40.00, Medida: 41.62, Erro: 1.62
+----- Teste 46
+Distancia real: 140.00, Medida: 138.85, Erro: 1.15
+----- Teste 47
+Distancia real: 84.00, Medida: 82.64, Erro: 1.36
+----- Teste 48
+Distancia real: 42.00, Medida: 47.27, Erro: 5.27
+----- Teste 49
+Distancia real: 6.00, Medida: 6.08, Erro: 0.08
+----- Teste 50
+Distancia real: 70.00, Medida: 69.46, Erro: 0.54
+----- Teste 51
+Distancia real: 30.00, Medida: 30.48, Erro: 0.48
+----- Teste 52
+Distancia real: 22.00, Medida: 20.25, Erro: 1.75
+----- Teste 53
+Distancia real: 12.00, Medida: 11.40, Erro: 0.60
+----- Teste 54
+Distancia real: 24.00, Medida: 24.00, Erro: 0.00
+----- Teste 55
+Distancia real: 365.00, Medida: 363.82, Erro: 1.18
+----- Teste 56
+Distancia real: 272.00, Medida: 270.87, Erro: 1.13
+----- Teste 57
+Distancia real: 183.00, Medida: 195.35, Erro: 12.35
+----- Teste 58
+Distancia real: 546.00, Medida: 545.95, Erro: 0.05
+----- Teste 59
+Distancia real: 199.00, Medida: 197.77, Erro: 1.23
+----- Teste 60
+Distancia real: 12.00, Medida: 12.08, Erro: 0.08
+----- Teste 61
+Distancia real: 28.00, Medida: 28.23, Erro: 0.23
+----- Teste 62
+Distancia real: 23.00, Medida: 24.08, Erro: 1.08
+----- Teste 63
+Distancia real: 214.00, Medida: 212.46, Erro: 1.54
+----- Teste 64
+Distancia real: 142.00, Medida: 140.73, Erro: 1.27
+----- Teste 65
+Distancia real: 275.00, Medida: 285.18, Erro: 10.18
+----- Teste 66
+Distancia real: 127.00, Medida: 125.88, Erro: 1.12
+----- Teste 67
+Distancia real: 279.00, Medida: 279.72, Erro: 0.72
+----- Teste 68
+Distancia real: 145.00, Medida: 145.04, Erro: 0.04
+----- Teste 69
+Distancia real: 275.00, Medida: 276.41, Erro: 1.41
+----- Teste 70
+Distancia real: 67.00, Medida: 102.08, Erro: 35.08
+----- Teste 71
+Distancia real: 140.00, Medida: 139.70, Erro: 0.30
+----- Teste 72
+Distancia real: 85.00, Medida: 84.50, Erro: 0.50
+----- Teste 73
+Distancia real: 49.00, Medida: 49.20, Erro: 0.20
+----- Teste 74
+Distancia real: 189.00, Medida: 189.81, Erro: 0.81
+----- Teste 75
+Distancia real: 136.00, Medida: 136.30, Erro: 0.30
+----- Teste 76
+Distancia real: 352.00, Medida: 352.69, Erro: 0.69
+----- Teste 77
+Distancia real: 6.00, Medida: 5.00, Erro: 1.00
+----- Teste 78
+Distancia real: 174.00, Medida: 173.54, Erro: 0.46
+----- Teste 79
+Distancia real: 361.00, Medida: 361.35, Erro: 0.35
+----- Teste 80
+Distancia real: 68.00, Medida: 68.96, Erro: 0.96
+----- Teste 81
+Distancia real: 93.00, Medida: 92.42, Erro: 0.58
+----- Teste 82
+Distancia real: 35.00, Medida: 33.14, Erro: 1.86
+----- Teste 83
+Distancia real: 86.00, Medida: 86.38, Erro: 0.38
+----- Teste 84
+Distancia real: 135.00, Medida: 135.56, Erro: 0.56
+----- Teste 85
+Distancia real: 125.00, Medida: 124.62, Erro: 0.38
+----- Teste 86
+Distancia real: 199.00, Medida: 206.24, Erro: 7.24
+----- Teste 87
+Distancia real: 380.00, Medida: 380.89, Erro: 0.89
+----- Teste 88
+Distancia real: 67.00, Medida: 66.91, Erro: 0.09
+----- Teste 89
+Distancia real: 391.00, Medida: 391.34, Erro: 0.34
+----- Teste 90
+Distancia real: 296.00, Medida: 297.20, Erro: 1.20
+----- Teste 91
+Distancia real: 310.00, Medida: 309.96, Erro: 0.04
+----- Teste 92
+Distancia real: 15.00, Medida: 14.87, Erro: 0.13
+----- Teste 93
+Distancia real: 35.00, Medida: 33.24, Erro: 1.76
+----- Teste 94
+Distancia real: 30.00, Medida: 29.12, Erro: 0.88
+----- Teste 95
+Distancia real: 21.00, Medida: 25.50, Erro: 4.50
+----- Teste 96
+Distancia real: 45.00, Medida: 44.60, Erro: 0.40
+----- Teste 97
+Distancia real: 110.00, Medida: 111.49, Erro: 1.49
+----- Teste 98
+Distancia real: 158.00, Medida: 158.68, Erro: 0.68
+----- Teste 99
+Distancia real: 92.00, Medida: 97.86, Erro: 5.86
+----- Teste 100
+Distancia real: 32.00, Medida: 31.78, Erro: 0.22
+----- Teste 101
+Distancia real: 207.00, Medida: 219.21, Erro: 12.21
+----- Teste 102
+Distancia real: 197.00, Medida: 196.74, Erro: 0.26
+----- Teste 103
+Distancia real: 47.00, Medida: 46.84, Erro: 0.16
+----- Teste 104
+Distancia real: 113.00, Medida: 115.00, Erro: 2.00
+----- Teste 105
+Distancia real: 164.00, Medida: 164.28, Erro: 0.28
+----- Teste 106
+Distancia real: 11.00, Medida: 11.70, Erro: 0.70
+----- Teste 107
+Distancia real: 104.00, Medida: 104.35, Erro: 0.35
+----- Teste 108
+Distancia real: 57.00, Medida: 70.77, Erro: 13.77
+----- Teste 109
+Distancia real: 385.00, Medida: 384.25, Erro: 0.75
+----- Teste 110
+Distancia real: 155.00, Medida: 175.07, Erro: 20.07
+----- Teste 111
+Distancia real: 156.00, Medida: 161.40, Erro: 5.40
+----- Teste 112
+Distancia real: 215.00, Medida: 215.06, Erro: 0.06
+----- Teste 113
+Distancia real: 68.00, Medida: 69.34, Erro: 1.34
+----- Teste 114
+Distancia real: 73.00, Medida: 72.95, Erro: 0.05
+----- Teste 115
+Distancia real: 468.00, Medida: 467.00, Erro: 1.00
+----- Teste 116
+Distancia real: 205.00, Medida: 191.97, Erro: 13.03
+----- Teste 117
+Distancia real: 400.00, Medida: 378.53, Erro: 21.47
+----- Teste 118
+Distancia real: 6.00, Medida: 5.83, Erro: 0.17
+----- Teste 119
+Distancia real: 48.00, Medida: 47.85, Erro: 0.15
+----- Teste 120
+Distancia real: 234.00, Medida: 233.19, Erro: 0.81
+----- Teste 121
+Distancia real: 115.00, Medida: 115.97, Erro: 0.97
+----- Teste 122
+Distancia real: 136.00, Medida: 142.06, Erro: 6.06
+----- Teste 123
+Distancia real: 76.00, Medida: 62.97, Erro: 13.03
+----- Teste 124
+Distancia real: 18.00, Medida: 17.20, Erro: 0.80
+----- Teste 125
+Distancia real: 5.00, Medida: 4.12, Erro: 0.88
+----- Teste 126
+Distancia real: 126.00, Medida: 125.20, Erro: 0.80
+----- Teste 127
+Distancia real: 510.00, Medida: 525.22, Erro: 15.22
+----- Teste 128
+Distancia real: 69.00, Medida: 68.10, Erro: 0.90
+----- Teste 129
+Distancia real: 9.00, Medida: 9.22, Erro: 0.22
+----- Teste 130
+Distancia real: 290.00, Medida: 289.41, Erro: 0.59
+----- Teste 131
+Distancia real: 111.00, Medida: 111.61, Erro: 0.61
+----- Teste 132
+Distancia real: 40.00, Medida: 40.20, Erro: 0.20
+----- Teste 133
+Distancia real: 229.00, Medida: 228.32, Erro: 0.68
+----- Teste 134
+Distancia real: 11.00, Medida: 11.31, Erro: 0.31
+----- Teste 135
+Distancia real: 154.00, Medida: 154.46, Erro: 0.46
+----- Teste 136
+Distancia real: 218.00, Medida: 216.54, Erro: 1.46
+----- Teste 137
+Distancia real: 156.00, Medida: 156.46, Erro: 0.46
+----- Teste 138
+Distancia real: 179.00, Medida: 178.47, Erro: 0.53
+----- Teste 139
+Distancia real: 156.00, Medida: 155.19, Erro: 0.81
+----- Teste 140
+Distancia real: 324.00, Medida: 323.97, Erro: 0.03
+----- Teste 141
+Distancia real: 147.00, Medida: 142.30, Erro: 4.70
+----- Teste 142
+Distancia real: 14.00, Medida: 13.60, Erro: 0.40
+----- Teste 143
+Distancia real: 189.00, Medida: 164.51, Erro: 24.49
+----- Teste 144
+Distancia real: 178.00, Medida: 178.35, Erro: 0.35
+----- Teste 145
+Distancia real: 33.00, Medida: 33.02, Erro: 0.02
+----- Teste 146
+Distancia real: 12.00, Medida: 10.82, Erro: 1.18
+----- Teste 147
+Distancia real: 82.00, Medida: 81.91, Erro: 0.09
+----- Teste 148
+Distancia real: 88.00, Medida: 86.70, Erro: 1.30
+----- Teste 149
+Distancia real: 206.00, Medida: 207.51, Erro: 1.51
+----- Teste 150
+Distancia real: 13.00, Medida: 13.42, Erro: 0.42
+----- Teste 151
+Distancia real: 331.00, Medida: 331.62, Erro: 0.62
+----- Teste 152
+Distancia real: 11.00, Medida: 11.18, Erro: 0.18
+----- Teste 153
+Distancia real: 87.00, Medida: 86.83, Erro: 0.17
+----- Teste 154
+Distancia real: 30.00, Medida: 80.75, Erro: 50.75
+----- Teste 155
+Distancia real: 116.00, Medida: 116.48, Erro: 0.48
+----- Teste 156
+Distancia real: 173.00, Medida: 174.19, Erro: 1.19
+----- Teste 157
+Distancia real: 42.00, Medida: 40.61, Erro: 1.39
+----- Teste 158
+Distancia real: 159.00, Medida: 161.25, Erro: 2.25
+----- Teste 159
+Distancia real: 30.00, Medida: 32.25, Erro: 2.25
+----- Teste 160
+Distancia real: 187.00, Medida: 186.27, Erro: 0.73
+----- Teste 161
+Distancia real: 152.00, Medida: 152.07, Erro: 0.07
+----- Teste 162
+Distancia real: 200.00, Medida: 199.90, Erro: 0.10
+----- Teste 163
+Distancia real: 42.00, Medida: 40.50, Erro: 1.50
+----- Teste 164
+Distancia real: 334.00, Medida: 333.94, Erro: 0.06
+----- Teste 165
+Distancia real: 87.00, Medida: 87.09, Erro: 0.09
+----- Teste 166
+Distancia real: 298.00, Medida: 296.14, Erro: 1.86
+----- Teste 167
+Distancia real: 326.00, Medida: 326.45, Erro: 0.45
+----- Teste 168
+Distancia real: 83.00, Medida: 86.31, Erro: 3.31
+----- Teste 169
+Distancia real: 118.00, Medida: 118.47, Erro: 0.47
+----- Teste 170
+Distancia real: 116.00, Medida: 116.10, Erro: 0.10
+----- Teste 171
+Distancia real: 6.00, Medida: 7.00, Erro: 1.00
+----- Teste 172
+Distancia real: 56.00, Medida: 44.01, Erro: 11.99
+----- Teste 173
+Distancia real: 16.00, Medida: 15.62, Erro: 0.38
+----- Teste 174
+Distancia real: 27.00, Medida: 169.61, Erro: 142.61
+----- Teste 175
+Distancia real: 156.00, Medida: 155.65, Erro: 0.35
+----- Teste 176
+Distancia real: 155.00, Medida: 152.03, Erro: 2.97
+----- Teste 177
+Distancia real: 100.00, Medida: 99.69, Erro: 0.31
+----- Teste 178
+Distancia real: 57.00, Medida: 57.45, Erro: 0.45
+----- Teste 179
+Distancia real: 62.00, Medida: 61.52, Erro: 0.48
+----- Teste 180
+Distancia real: 7.00, Medida: 8.54, Erro: 1.54
+----- Teste 181
+Distancia real: 63.00, Medida: 61.35, Erro: 1.65
+----- Teste 182
+Distancia real: 333.00, Medida: 345.78, Erro: 12.78
+----- Teste 183
+Distancia real: 51.00, Medida: 51.87, Erro: 0.87
+----- Teste 184
+Distancia real: 87.00, Medida: 98.01, Erro: 11.01
+----- Teste 185
+Distancia real: 241.00, Medida: 240.05, Erro: 0.95
+----- Teste 186
+Distancia real: 158.00, Medida: 161.77, Erro: 3.77
+----- Teste 187
+Distancia real: 64.00, Medida: 64.38, Erro: 0.38
+----- Teste 188
+Distancia real: 42.00, Medida: 41.98, Erro: 0.02
+----- Teste 189
+Distancia real: 71.00, Medida: 69.46, Erro: 1.54
+----- Teste 190
+Distancia real: 42.00, Medida: 39.60, Erro: 2.40
+----- Teste 191
+Distancia real: 135.00, Medida: 133.09, Erro: 1.91
+----- Teste 192
+Distancia real: 74.00, Medida: 75.19, Erro: 1.19
+----- Teste 193
+Distancia real: 312.00, Medida: 28.79, Erro: 283.21
+----- Teste 194
+Distancia real: 520.00, Medida: 520.50, Erro: 0.50
+----- Teste 195
+Distancia real: 101.00, Medida: 101.83, Erro: 0.83
+----- Teste 196
+Distancia real: 235.00, Medida: 236.25, Erro: 1.25
+----- Teste 197
+Distancia real: 165.00, Medida: 164.71, Erro: 0.29
+----- Teste 198
+Distancia real: 20.00, Medida: 118.02, Erro: 98.02
+----- Teste 199
+Distancia real: 536.00, Medida: 536.18, Erro: 0.18
+----- Teste 200
+Distancia real: 299.00, Medida: 321.14, Erro: 22.14
+----- Teste 201
+Distancia real: 25.00, Medida: 27.02, Erro: 2.02
+----- Teste 202
+Distancia real: 73.00, Medida: 72.07, Erro: 0.93
+----- Teste 203
+Distancia real: 280.00, Medida: 279.80, Erro: 0.20
+----- Teste 204
+Distancia real: 34.00, Medida: 35.23, Erro: 1.23
+----- Teste 205
+Distancia real: 52.00, Medida: 37.95, Erro: 14.05
+----- Teste 206
+Distancia real: 45.00, Medida: 38.83, Erro: 6.17
+----- Teste 207
+Distancia real: 357.00, Medida: 357.50, Erro: 0.50
+----- Teste 208
+Distancia real: 76.00, Medida: 75.13, Erro: 0.87
+----- Teste 209
+Distancia real: 54.00, Medida: 53.08, Erro: 0.92
+----- Teste 210
+Distancia real: 7.00, Medida: 6.08, Erro: 0.92
+----- Teste 211
+Distancia real: 328.00, Medida: 328.06, Erro: 0.06
+----- Teste 212
+Distancia real: 498.00, Medida: 497.64, Erro: 0.36
+----- Teste 213
+Distancia real: 179.00, Medida: 178.35, Erro: 0.65
+----- Teste 214
+Distancia real: 284.00, Medida: 280.26, Erro: 3.74
+----- Teste 215
+Distancia real: 185.00, Medida: 184.01, Erro: 0.99
+----- Teste 216
+Distancia real: 263.00, Medida: 262.08, Erro: 0.92
+----- Teste 217
+Distancia real: 10.00, Medida: 10.82, Erro: 0.82
+----- Teste 218
+Distancia real: 122.00, Medida: 121.75, Erro: 0.25
+----- Teste 219
+Distancia real: 104.00, Medida: 104.66, Erro: 0.66
+----- Teste 220
+Distancia real: 620.00, Medida: 621.82, Erro: 1.82
+----- Teste 221
+Distancia real: 131.00, Medida: 129.99, Erro: 1.01
+----- Teste 222
+Distancia real: 218.00, Medida: 220.34, Erro: 2.34
+----- Teste 223
+Distancia real: 38.00, Medida: 39.20, Erro: 1.20
+----- Teste 224
+Distancia real: 43.00, Medida: 45.00, Erro: 2.00
+----- Teste 225
+Distancia real: 493.00, Medida: 493.03, Erro: 0.03
+----- Teste 226
+Distancia real: 138.00, Medida: 142.13, Erro: 4.13
+----- Teste 227
+Distancia real: 253.00, Medida: 249.72, Erro: 3.28
+----- Teste 228
+Distancia real: 91.00, Medida: 80.01, Erro: 10.99
+----- Teste 229
+Distancia real: 324.00, Medida: 323.88, Erro: 0.12
+----- Teste 230
+Distancia real: 75.00, Medida: 75.96, Erro: 0.96
+----- Teste 231
+Distancia real: 49.00, Medida: 48.00, Erro: 1.00
+----- Teste 232
+Distancia real: 20.00, Medida: 23.41, Erro: 3.41
+----- Teste 233
+Distancia real: 226.00, Medida: 225.08, Erro: 0.92
+----- Teste 234
+Distancia real: 518.00, Medida: 516.43, Erro: 1.57
+----- Teste 235
+Distancia real: 8.00, Medida: 8.06, Erro: 0.06
+----- Teste 236
+Distancia real: 191.00, Medida: 191.13, Erro: 0.13
+----- Teste 237
+Distancia real: 128.00, Medida: 127.25, Erro: 0.75
+----- Teste 238
+Distancia real: 86.00, Medida: 85.91, Erro: 0.09
+----- Teste 239
+Distancia real: 26.00, Medida: 24.19, Erro: 1.81
+----- Teste 240
+Distancia real: 343.00, Medida: 343.68, Erro: 0.68
+----- Teste 241
+Distancia real: 17.00, Medida: 17.00, Erro: 0.00
+----- Teste 242
+Distancia real: 135.00, Medida: 137.64, Erro: 2.64
+----- Teste 243
+Distancia real: 524.00, Medida: 524.02, Erro: 0.02
+----- Teste 244
+Distancia real: 195.00, Medida: 193.94, Erro: 1.06
+----- Teste 245
+Distancia real: 58.00, Medida: 58.82, Erro: 0.82
+----- Teste 246
+Distancia real: 58.00, Medida: 59.82, Erro: 1.82
+----- Teste 247
+Distancia real: 153.00, Medida: 152.20, Erro: 0.80
+----- Teste 248
+Distancia real: 121.00, Medida: 121.70, Erro: 0.70
+----- Teste 249
+Distancia real: 187.00, Medida: 187.26, Erro: 0.26
+----- Teste 250
+Distancia real: 164.00, Medida: 164.65, Erro: 0.65
+----- Teste 251
+Distancia real: 59.00, Medida: 58.80, Erro: 0.20
+----- Teste 252
+Distancia real: 123.00, Medida: 124.40, Erro: 1.40
+----- Teste 253
+Distancia real: 45.00, Medida: 45.12, Erro: 0.12
+----- Teste 254
+Distancia real: 21.00, Medida: 21.21, Erro: 0.21
+----- Teste 255
+Distancia real: 5.00, Medida: 6.08, Erro: 1.08
+----- Teste 256
+Distancia real: 101.00, Medida: 109.90, Erro: 8.90
+----- Teste 257
+Distancia real: 35.00, Medida: 35.47, Erro: 0.47
+----- Teste 258
+Distancia real: 178.00, Medida: 178.60, Erro: 0.60
+----- Teste 259
+Distancia real: 301.00, Medida: 300.73, Erro: 0.27
+----- Teste 260
+Distancia real: 210.00, Medida: 210.26, Erro: 0.26
+----- Teste 261
+Distancia real: 16.00, Medida: 18.03, Erro: 2.03
+----- Teste 262
+Distancia real: 148.00, Medida: 172.10, Erro: 24.10
+----- Teste 263
+Distancia real: 126.00, Medida: 125.20, Erro: 0.80
+----- Teste 264
+Distancia real: 136.00, Medida: 135.67, Erro: 0.33
+----- Teste 265
+Distancia real: 73.00, Medida: 74.33, Erro: 1.33
+----- Teste 266
+Distancia real: 132.00, Medida: 131.89, Erro: 0.11
+----- Teste 267
+Distancia real: 59.00, Medida: 58.82, Erro: 0.18
+----- Teste 268
+Distancia real: 153.00, Medida: 152.16, Erro: 0.84
+----- Teste 269
+Distancia real: 12.00, Medida: 12.21, Erro: 0.21
+----- Teste 270
+Distancia real: 27.00, Medida: 27.66, Erro: 0.66
+----- Teste 271
+Distancia real: 18.00, Medida: 18.03, Erro: 0.03
+----- Teste 272
+Distancia real: 48.00, Medida: 48.47, Erro: 0.47
+----- Teste 273
+Distancia real: 204.00, Medida: 204.44, Erro: 0.44
+----- Teste 274
+Distancia real: 120.00, Medida: 119.54, Erro: 0.46
+----- Teste 275
+Distancia real: 279.00, Medida: 278.30, Erro: 0.70
+----- Teste 276
+Distancia real: 387.00, Medida: 388.19, Erro: 1.19
+----- Teste 277
+Distancia real: 64.00, Medida: 66.48, Erro: 2.48
+----- Teste 278
+Distancia real: 10.00, Medida: 10.30, Erro: 0.30
+----- Teste 279
+Distancia real: 73.00, Medida: 73.59, Erro: 0.59
+----- Teste 280
+Distancia real: 495.00, Medida: 494.63, Erro: 0.37
+----- Teste 281
+Distancia real: 273.00, Medida: 271.75, Erro: 1.25
+----- Teste 282
+Distancia real: 91.00, Medida: 89.94, Erro: 1.06
+----- Teste 283
+Distancia real: 81.00, Medida: 79.31, Erro: 1.69
+----- Teste 284
+Distancia real: 392.00, Medida: 392.19, Erro: 0.19
+----- Teste 285
+Distancia real: 199.00, Medida: 198.83, Erro: 0.17
+----- Teste 286
+Distancia real: 153.00, Medida: 157.20, Erro: 4.20
+----- Teste 287
+Distancia real: 24.00, Medida: 19.00, Erro: 5.00
+----- Teste 288
+Distancia real: 87.00, Medida: 88.07, Erro: 1.07
+----- Teste 289
+Distancia real: 97.00, Medida: 96.38, Erro: 0.62
+----- Teste 290
+Distancia real: 105.00, Medida: 107.07, Erro: 2.07
+----- Teste 291
+Distancia real: 603.00, Medida: 602.32, Erro: 0.68
+----- Teste 292
+Distancia real: 173.00, Medida: 172.45, Erro: 0.55
+----- Teste 293
+Distancia real: 248.00, Medida: 248.13, Erro: 0.13
+----- Teste 294
+Distancia real: 72.00, Medida: 70.58, Erro: 1.42
+----- Teste 295
+Distancia real: 96.00, Medida: 95.80, Erro: 0.20
+----- Teste 296
+Distancia real: 182.00, Medida: 204.40, Erro: 22.40
+----- Teste 297
+Distancia real: 116.00, Medida: 115.88, Erro: 0.12
+----- Teste 298
+Distancia real: 40.00, Medida: 46.10, Erro: 6.10
+----- Teste 299
+Distancia real: 152.00, Medida: 151.43, Erro: 0.57
+----- Teste 300
+Distancia real: 360.00, Medida: 360.59, Erro: 0.59
+----------------------------------------
+Erro medio: 4.19
+Pior teste: 193 (erro: 283.21)
+Tempo total: 271069098
+Erros maior que 2:28 Testes: 1 9 10 25 34 40 41 95 104 141 158 159 168 176 186 190 201 214 222 224 226 227 232 242 261 277 286 290 
+Erros maior que 5:26 Testes: 4 16 32 33 35 48 57 65 86 99 101 108 111 116 122 123 127 172 182 184 205 206 228 256 287 298 
+Erros maior que 20:10 Testes: 2 70 110 117 143 154 198 200 262 296 
+Erros maior que 100:2 Testes: 174 193 
+
+real    16m17,367s
+user    13m46,381s
+sys     0m11,387s
