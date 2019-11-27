@@ -6,17 +6,17 @@
 #include "imagem.h"
 
 #define MAX 64
-#define V_MIN_TRESHOLD 60	//Valor mínimo para limpar campos com muito ruído no arquivo limpo //Entre 40-60 ta bom 
+#define V_MIN_TRESHOLD 60	//Valor mínimo para limpar campos com muito ruído no arquivo limpo //Entre 40-60 ta bom
 #define TAM_JANELA 3
-#define THRESH_INTER 208
-#define PRETO 255
-#define BRANCO 0
+#define THRESH_INTER 203
+#define PRETO 0
+#define BRANCO 255
 #define R 0
 #define G 1
 #define B 2
 #define LIM_PM 1
 
-#define SALVA_MODELOS 0		//Flag para salvar os modelos
+#define SALVA_MODELOS 1		//Flag para salvar os modelos
 
 void filtroMedia(Imagem* img, Imagem* out, int winSize);
 int mediaVizinhanca(Imagem* v,int x, int y,int t,int canal);
@@ -29,7 +29,7 @@ void pontoMedio(Imagem img,unsigned long *vet);
 
 double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int i){
 	Imagem *copia[2]={img1,img2};
-	unsigned long pos_i[2],pos_f[2];	
+	unsigned long pos_i[2],pos_f[2];
 	Imagem outLimpa[2];
 	filtroMedia(img1,img1,TAM_JANELA);
 	filtroMedia(img2,img2,TAM_JANELA);
@@ -48,12 +48,13 @@ double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int i){
 			}
 		}
 		filtroPonto(&outLimpa[im]);
+		filtroPonto(&outLimpa[im]);
 		interseccaoCanais(&outLimpa[im],&outLimpa[im]);
 	}
 	if(SALVA_MODELOS){
 		char str[2][MAX];
-		sprintf(str[0],"limpa-%d-1.bmp",i);
-		sprintf(str[1],"limpa-%d-2.bmp",i);
+		sprintf(str[0],"Limpa-%d-1.bmp",i);
+		sprintf(str[1],"Limpa-%d-2.bmp",i);
 		salvaImagem(&outLimpa[0],str[0]);
 		salvaImagem(&outLimpa[1],str[1]);
 	}
@@ -141,18 +142,18 @@ void filtroPonto(Imagem* img){
 
 }
 void pontoMedio(Imagem img,unsigned long *vet){
-    unsigned long i,j,ii,jj,cont=0;
+    unsigned long i,j,k,l,cont=0;
     unsigned long x[2]={0,img.largura},y[2]={0,img.altura};
-    //Checa se todos os vizinhos numa janela 5x5 sao pretos
+    //Checa se todos os vizinhos numa janela 3x3 sao brancos
     //e sua coordenada i j sejam as maiores ou menores possiveis
     //e em seguida salva esse ponto como referencia.
     for(i = LIM_PM ; i < img.altura-LIM_PM ; i++){
         for(j = LIM_PM ; j < img.largura-LIM_PM ; j ++){
-            for(ii = i-LIM_PM ; ii <= i +LIM_PM ; ii++){
-                for(jj = j - LIM_PM ; jj <= j+LIM_PM ; jj++)
-                    cont += img.dados[0][ii][jj];
-            }
-            if(cont == BRANCO){
+            for(k = i-LIM_PM ; k <= i +LIM_PM ; k++)
+                for(l = j - LIM_PM ; l <= j+LIM_PM ; l++)
+                    if(img.dados[0][k][l]==255)
+											cont ++;
+            if(cont >= 8){
                 if(i > y[0] && j > x[0]){
                     x[0] = j;
                     y[0] = i;
