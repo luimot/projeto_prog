@@ -16,7 +16,7 @@
 #define B 2
 #define LIM_PM 1
 
-#define SALVA_MODELOS 1		//Flag para salvar os modelos
+#define SALVA_MODELOS 0		//Flag para salvar os modelos
 
 void filtroMedia(Imagem* img, Imagem* out, int winSize);
 int mediaVizinhanca(Imagem* v,int x, int y,int t,int canal);
@@ -25,11 +25,12 @@ void alocaDados(Imagem* x);
 void desalocaDados(Imagem* x);
 void procuraBlob(Imagem in,unsigned long *xi,unsigned long *yi, unsigned long *xf,unsigned long *yf);
 void filtroPonto(Imagem* img);
-void pontoMedio(Imagem img,unsigned long *vet);
+void pontoMedio(Imagem img,unsigned long *vet,int canal);
 
 double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int i){
 	Imagem *copia[2]={img1,img2};
 	unsigned long pos_i[2],pos_f[2];
+	int somaM=0,maior[2];
 	Imagem outLimpa[2];
 	filtroMedia(img1,img1,TAM_JANELA);
 	filtroMedia(img2,img2,TAM_JANELA);
@@ -40,16 +41,17 @@ double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int i){
 		alocaDados(&outLimpa[im]);
 		for(int c=0;c<3;c++){
 			for(int i=0;i<outLimpa[im].altura;i++){
+				somaM=0;
 				for(int j=0;j<outLimpa[im].largura;j++){
 					outLimpa[im].dados[c][i][j]= copia[im]->dados[c][i][j] - bg->dados[c][i][j];
+					somaM+= outLimpa[im].dados[c][i][j];
 					if(outLimpa[im].dados[c][i][j] < V_MIN_TRESHOLD)
 						outLimpa[im].dados[c][i][j]=255;
 				}
 			}
 		}
-		filtroPonto(&outLimpa[im]);
-		filtroPonto(&outLimpa[im]);
 		interseccaoCanais(&outLimpa[im],&outLimpa[im]);
+		filtroPonto(&outLimpa[im]);
 	}
 	if(SALVA_MODELOS){
 		char str[2][MAX];
@@ -58,8 +60,8 @@ double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int i){
 		salvaImagem(&outLimpa[0],str[0]);
 		salvaImagem(&outLimpa[1],str[1]);
 	}
-	pontoMedio(outLimpa[0],pos_i);
-	pontoMedio(outLimpa[1],pos_f);
+	pontoMedio(outLimpa[0],pos_i,0);
+	pontoMedio(outLimpa[1],pos_f,0);
 	desalocaDados(&outLimpa[0]);
 	desalocaDados(&outLimpa[1]);
 	return sqrt( pow(abs(pos_f[0]-pos_i[0]),2)+ pow(abs(pos_f[1]-pos_i[1]),2) );
@@ -75,18 +77,20 @@ void filtroMedia(Imagem* img, Imagem* out, int winSize){
 		}
 	}
 	//preenche as bordas
-	for(i=0;i<tam;i++)
-		for(j=0;j<img->largura;j++)
-			out->dados[canal][i][j]=img->dados[canal][i][j];
-	for(i=tam;i<img->altura-tam;i++){
-		for(j=0;j<tam;j++)
-			out->dados[canal][i][j]=img->dados[canal][i][j];
-		for(j=img->largura-tam;j<img->largura;j++)
-			out->dados[canal][i][j]=img->dados[canal][i][j];
-	}
-	for(i=img->altura-tam;i<img->altura;i++)
-		for(j=0;j<img->largura;j++)
-			out->dados[canal][i][j]=img->dados[canal][i][j];
+	if(SALVA_MODELOS){
+		for(i=0;i<tam;i++)
+			for(j=0;j<img->largura;j++)
+				out->dados[canal][i][j]=img->dados[canal][i][j];
+		for(i=tam;i<img->altura-tam;i++){
+			for(j=0;j<tam;j++)
+				out->dados[canal][i][j]=img->dados[canal][i][j];
+			for(j=img->largura-tam;j<img->largura;j++)
+				out->dados[canal][i][j]=img->dados[canal][i][j];
+		}
+		for(i=img->altura-tam;i<img->altura;i++)
+			for(j=0;j<img->largura;j++)
+				out->dados[canal][i][j]=img->dados[canal][i][j];
+		}
 	}
 }
 
@@ -101,12 +105,10 @@ int mediaVizinhanca(Imagem* v,int x, int y,int t,int canal){
 void interseccaoCanais(Imagem* in,Imagem* out){
 	for(int i=0;i<in->altura;i++){
 		for(int j=0;j<in->largura;j++){
-			if((in->dados[R][i][j] + in->dados[G][i][j] + in->dados[B][i][j])/3.0 < THRESH_INTER){
-				in->dados[R][i][j]=BRANCO;in->dados[G][i][j]=BRANCO;in->dados[B][i][j]=BRANCO;
-			}
-			else{
-				in->dados[R][i][j]=PRETO;in->dados[G][i][j]=PRETO;in->dados[B][i][j]=PRETO;
-			}
+			if((in->dados[R][i][j] + in->dados[G][i][j] + in->dados[B][i][j])/3.0 < THRESH_INTER)
+				in->dados[R][i][j] = in->dados[G][i][j] = in->dados[B][i][j]=BRANCO;
+			else
+				in->dados[R][i][j] = in->dados[G][i][j] = in->dados[B][i][j]=PRETO;
 		}
 	}
 }
@@ -130,18 +132,16 @@ void desalocaDados(Imagem* x){
 }
 void filtroPonto(Imagem* img){
     int i,j;
-    for(i = 0 ; i < img->altura-2 ; i ++){
-        for(j = 0 ; j < img->largura-2 ; j ++){
-            if(img->dados[R][i][j] == BRANCO &&  img->dados[R][i+1][j+1] == PRETO){
-                img->dados[R][i][j] = PRETO;
-                img->dados[G][i][j] = PRETO;
-                img->dados[B][i][j] = PRETO;
+    for(i = 0 ; i < img->altura-5 ; i ++){
+        for(j = 0 ; j < img->largura-5 ; j ++){
+            if(img->dados[R][i][j] == BRANCO && img->dados[R][i+1][j+1] == PRETO && img->dados[R][i+2][j+2] && img->dados[R][i+2][j+2] == PRETO && img->dados[R][i+3][j+3] == PRETO){
+                img->dados[R][i][j] = img->dados[G][i][j] = img->dados[B][i][j] = PRETO;
             }
         }
     }
 
 }
-void pontoMedio(Imagem img,unsigned long *vet){
+void pontoMedio(Imagem img,unsigned long *vet,int canal){
     unsigned long i,j,k,l,cont=0;
     unsigned long x[2]={0,img.largura},y[2]={0,img.altura};
     //Checa se todos os vizinhos numa janela 3x3 sao brancos
@@ -151,9 +151,9 @@ void pontoMedio(Imagem img,unsigned long *vet){
         for(j = LIM_PM ; j < img.largura-LIM_PM ; j ++){
             for(k = i-LIM_PM ; k <= i +LIM_PM ; k++)
                 for(l = j - LIM_PM ; l <= j+LIM_PM ; l++)
-                    if(img.dados[0][k][l]==255)
-											cont ++;
-            if(cont >= 8){
+                    if(img.dados[canal][k][l]==255)
+						cont ++;
+            if(cont >= 7){
                 if(i > y[0] && j > x[0]){
                     x[0] = j;
                     y[0] = i;
