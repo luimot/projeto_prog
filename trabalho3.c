@@ -149,28 +149,7 @@ void desalocaDados(Imagem* x){
 		}
 		free(x->dados);
 }
-/*
-void filtroPonto(Imagem* img){
-    int i,j;
-    bool flag_preto=false;
-    for(i = 5 ; i < img->altura-5 ; i ++){
-        for(j = 5 ; j < img->largura-5 ; j ++){
-            if(img->dados[R][i][j] == BRANCO){
-            	for(int k=-3;k<3;k++){
-            		if(img->dados[R][i+k][j+k] == PRETO || k == 0)
-            			flag_preto=true;
-            		else{
-            			flag_preto=false;
-            			break;
-            		}
-            	}
-            	if(flag_preto)
-            		img->dados[R][i][j] = img->dados[G][i][j] = img->dados[B][i][j] = PRETO;
-            }
-        }
-    }
-}
-*/
+
 void filtroPonto(Imagem* img){
     int i,j;
     for(i = 0 ; i < img->altura-5 ; i ++){
@@ -182,39 +161,6 @@ void filtroPonto(Imagem* img){
     }
 
 }
-/*
-void pontoMedio(Imagem img,Posicao* pos){
-    unsigned long i,j,k,l,cont=0;
-    int jan = 2*LIM_PM+1;
-    unsigned long x[2]={0,img.largura},y[2]={0,img.altura};
-    //Checa se todos os vizinhos numa janela 3x3 sao brancos
-    //e sua coordenada i j sejam as maiores ou menores possiveis
-    //e em seguida salva esse ponto como referencia.
-    for(i = LIM_PM ; i < img.altura-LIM_PM ; i++){
-        for(j = LIM_PM ; j < img.largura-LIM_PM ; j ++){
-            for(k = i-LIM_PM ; k <= i +LIM_PM ; k++)
-                for(l = j - LIM_PM ; l <= j+LIM_PM ; l++)
-                    if(img.dados[R][k][l]==BRANCO)
-						cont ++;
-            if(cont >= 8){
-                if(i > y[0] && j > x[0]){
-                    x[0] = j;
-                    y[0] = i;
-                }
-                if(i < y[1] && j < x[1]){
-                    x[1] = j;
-                    y[1]= i;
-                }
-                break;
-            }
-            cont=0;
-        }
-    }
-    //faz a media dos pontos de referencia
-    pos->y = (y[0]+y[1])/2;
-    pos->x = (x[0]+x[1])/2;
-}
-*/
 
 void pontoMedio(Imagem img, Posicao* pos){
 	int winSize = JANELA_PM/2;
