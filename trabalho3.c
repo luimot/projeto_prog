@@ -10,7 +10,7 @@
 #define V_MIN_TRESHOLD 38	//Valor mínimo para limpar campos com muito ruído no arquivo limpo //38-39 ta bom demais
 #define TAM_JANELA 3
 #define JANELA_PM 5
-#define THRESH_INTER 209
+#define THRESH_INTER 204
 #define PRETO 0
 #define BRANCO 255
 #define R 0
@@ -168,12 +168,14 @@ void pontoMedio(Imagem img, Posicao* pos){
 	int maximo=(int)pow(2*winSize+1,2);
 	bool flag_continuo=false;
 	Posicao posQuina[2];
-	for(unsigned long i=LIM_PM;i<img.altura-LIM_PM && !flag_continuo;i++){
-		for(unsigned long j=LIM_PM;j<img.largura-LIM_PM && !flag_continuo;j++){
+	unsigned long i,j;
+	int k,l;
+	for(i=LIM_PM;i<img.altura-LIM_PM && !flag_continuo;i++){
+		for(j=LIM_PM;j<img.largura-LIM_PM && !flag_continuo;j++){
 			//janela 1
 			cont=0;
-			for(int k=-winSize;k<=winSize && !flag_continuo;k++){
-				for(int l=-winSize;l<=winSize && !flag_continuo;l++){	//Se a metade+1 da janela for de brancos, identifica o primeiro ponto
+			for(k=-winSize;k<=winSize && !flag_continuo;k++){
+				for(l=-winSize;l<=winSize && !flag_continuo;l++){	//Se a metade+1 da janela for de brancos, identifica o primeiro ponto
 					if(img.dados[R][i+k][j+l] == BRANCO)
 						cont++;
 					if(cont==maximo/2+1){
@@ -187,15 +189,15 @@ void pontoMedio(Imagem img, Posicao* pos){
 		}
 	}
 	flag_continuo=false;
-	for(unsigned long i=posQuina[0].y;i<img.altura-LIM_PM && !flag_continuo;i++){
-		for(unsigned long j=posQuina[0].x+1;j<img.largura-LIM_PM && !flag_continuo;j++){
+	for(i=posQuina[0].y;i<img.altura-LIM_PM && !flag_continuo;i++){
+		for(j=posQuina[0].x+1;j<img.largura-LIM_PM && !flag_continuo;j++){
 			//janela2
 			if(janelaPosterior(img,j,i) && janelaPosterior(img,j+1,i) && janelaPosterior(img,j+2,i) && janelaPosterior(img,j+3,i) && janelaPosterior(img,j+3,i)){
 				i++;
 				break;
 			}
-			for(int k=-winSize;k<=winSize && !flag_continuo;k++){
-				for(int l=-winSize;l<=winSize;l++){		//Igual o anterior, mas checando para pretos com valor consideravel de brancos
+			for(k=-winSize;k<=winSize && !flag_continuo;k++){
+				for(l=-winSize;l<=winSize;l++){		//Igual o anterior, mas checando para pretos com valor consideravel de brancos
 					if(img.dados[R][i+k][j+l] == PRETO)//Se todo preto, todo branco ou poucos pretos e brancos, ignora. 
 						cont++;
 				}
