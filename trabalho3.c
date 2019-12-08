@@ -131,8 +131,9 @@ void filtroMedia(Imagem* img, int winSize){
 */
 unsigned char mediaVizinhanca(Imagem v,int x, int y,int t,int canal){
 	int media=0,tam=t/2;
-	for(unsigned long i=x-tam;i<=x+tam;i++)
-		for(unsigned long j=y-tam;j<=y+tam;j++)
+	unsigned long i,j;
+	for(i=x-tam;i<=x+tam;i++)
+		for(j=y-tam;j<=y+tam;j++)
 			media+=v.dados[canal][i][j];
 	return media/(t*t);
 }
@@ -142,8 +143,9 @@ unsigned char mediaVizinhanca(Imagem v,int x, int y,int t,int canal){
 *Valores de retorno:NENHUM
 */
 void interseccaoCanais(Imagem* in){
-	for(int i=0;i<in->altura;i++){
-		for(int j=0;j<in->largura;j++){
+	unsigned long i,j;
+	for(i=0;i<in->altura;i++){
+		for(j=0;j<in->largura;j++){
 			if((in->dados[R][i][j] + in->dados[G][i][j] + in->dados[B][i][j])/3.0 < THRESH_INTER)
 				in->dados[R][i][j] = in->dados[G][i][j] = in->dados[B][i][j]=BRANCO;
 			else
@@ -155,10 +157,12 @@ void interseccaoCanais(Imagem* in){
 *
 */
 void alocaDados(Imagem* x){
+	int i;
+	unsigned long j;
 	x->dados=(unsigned char***)malloc(sizeof(unsigned char**)*x->n_canais);
-		for(int i=0;i<x->n_canais;i++){
+		for(i=0;i<x->n_canais;i++){
 			x->dados[i]=(unsigned char**)malloc(sizeof(unsigned char*)*x->altura);
-			for(unsigned long j=0;j<x->altura;j++)
+			for(j=0;j<x->altura;j++)
 				x->dados[i][j]=(unsigned char*)malloc(sizeof(unsigned char)*x->largura);
 		}
 }
@@ -166,8 +170,10 @@ void alocaDados(Imagem* x){
 *
 */
 void desalocaDados(Imagem* x){
-	for (int i=0;i<x->n_canais;i++){
-			for (unsigned long j=0;j<x->altura;j++)
+	int i;
+	unsigned long j;
+	for (i=0;i<x->n_canais;i++){
+			for (j=0;j<x->altura;j++)
 				free (x->dados[i][j]);
 			free (x->dados[i]);
 		}
@@ -256,8 +262,9 @@ void pontoMedio(Imagem img, Posicao* pos){
 bool janelaPosterior(Imagem img,unsigned long x,unsigned long y){	//Verfica se todos os pixeis na janela sao brancos, retorna 1 se sim.
 	int winSize=TAM_JANELA/2;
 	int cont=0;
-	for(unsigned long i=y-winSize;i<y+winSize;i++){
-		for(unsigned long j=x-winSize;j<x+winSize;j++){
+	unsigned long i,j;
+	for(i=y-winSize;i<y+winSize;i++){
+		for(j=x-winSize;j<x+winSize;j++){
 			if(img.dados[R][i][j]==BRANCO)
 				cont++;
 			if(cont == (int)pow(2*winSize+1,2))
