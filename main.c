@@ -115,7 +115,7 @@ int main ()
 	printf ("----------------------------------------\n");
 	printf ("Erro medio: %.2f\n", erro_total / N_TESTES);
 	printf ("Pior teste: %d (erro: %.2f)\n", pior_teste, maior_erro);
-	printf ("Tempo total: %d\n", (int) tempo_total);
+	printf ("Tempo total: %.2f\n", (float) tempo_total/CLOCKS_PER_SEC);
 	printf ("%d erros maiores que 2.\n\tTestes: ",cont2);
 	for(int x=0;pos2[x]!=0;x++)
 		printf("%d ",pos2[x]);

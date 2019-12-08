@@ -1,3 +1,10 @@
+/*============================================================================*/
+/* CSF13 - TRABALHO 2                                                         */
+/*----------------------------------------------------------------------------*/
+/* Autores:	LUIZ FERNANDO DE ALMEIDA MOTA / RA:1661833						  */
+/*			RUDINEI							 								  */
+/*			ROBSON															  */
+/*============================================================================*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -7,27 +14,28 @@
 #include "imagem.h"
 
 #define MAX 64
-#define V_MIN_TRESHOLD 38	//Valor mínimo para limpar campos com muito ruído no arquivo limpo //38-39 ta bom demais
+#define V_MIN_TRESHOLD 33	//Valor mínimo para limpar campos com muito ruído no arquivo limpo //38-39 ta bom demais
 #define TAM_JANELA 3
 #define JANELA_PM 5
-#define THRESH_INTER 204
+#define THRESH_INTER 202
 #define PRETO 0
 #define BRANCO 255
 #define R 0
 #define G 1
 #define B 2
 #define LIM_PM 20
+#define LIMITE_PONTO 3 //4
 
-#define SALVA_MODELOS 1		//Flag para salvar os modelos
+#define SALVA_MODELOS 0		//Flag para salvar os modelos
 
 typedef struct posicao{
 	unsigned long x;
 	unsigned long y;
 } Posicao;
 
-void filtroMedia(Imagem* img, Imagem* out, int winSize);
-int mediaVizinhanca(Imagem* v,int x, int y,int t,int canal);
-void interseccaoCanais(Imagem* in,Imagem* out);
+void filtroMedia(Imagem* img, int winSize);
+unsigned char mediaVizinhanca(Imagem v,int x, int y,int t,int canal);
+void interseccaoCanais(Imagem* in);
 void alocaDados(Imagem* x);
 void desalocaDados(Imagem* x);
 void procuraBlob(Imagem in,unsigned long *xi,unsigned long *yi, unsigned long *xf,unsigned long *yf);
@@ -35,23 +43,33 @@ void filtroPonto(Imagem* img);
 void pontoMedio(Imagem img,Posicao* pos);
 bool janelaPosterior(Imagem img,unsigned long x,unsigned long y);
 
-double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int i){
+
+/*A função calculaDistancia recebe as imagens a serem analisadas como também seu fundo
+* e seu índice, calcula a distancia entre os veículos das duas imagens e retorna a distância estimada.
+*Parâmetros:Imagem* bg:É a struct com o fundo das imagens geradas.	
+*	Imagem* img1:É a primeira struct com as informações da imagem formada.
+*	Imagem* img2:É a segunda struct com as informações da imagem formada.
+*Valor de retorno: Uma double com a distância estimada entre os veículos nas imagens fornecidas.
+*/
+double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int indice){
 	Imagem *copia[2]={img1,img2};
 	Posicao pos_i,pos_f;
 	int somaM=0,maior[2];
 	Imagem outLimpa[2];
-	filtroMedia(img1,img1,TAM_JANELA);
-	filtroMedia(img2,img2,TAM_JANELA);
-	filtroMedia(bg,bg,TAM_JANELA+2);
-	for(int im=0;im<2;im++){
+	filtroMedia(img1,TAM_JANELA);
+	filtroMedia(img2,TAM_JANELA);
+	//filtroMedia(bg,TAM_JANELA+2);
+	int im,c,k,l;
+	unsigned long i,j;
+	for(im=0;im<2;im++){
 		outLimpa[im].altura=bg->altura;
 		outLimpa[im].largura=bg->largura;
 		outLimpa[im].n_canais=bg->n_canais;
 		alocaDados(&outLimpa[im]);
-		for(int c=0;c<3;c++){
-			for(int i=0;i<outLimpa[im].altura;i++){
+		for(c=0;c<3;c++){
+			for(i=0;i<outLimpa[im].altura;i++){
 				somaM=0;
-				for(int j=0;j<outLimpa[im].largura;j++){
+				for(j=0;j<outLimpa[im].largura;j++){
 					outLimpa[im].dados[c][i][j]= copia[im]->dados[c][i][j] - bg->dados[c][i][j];
 					somaM+= outLimpa[im].dados[c][i][j];
 					if(outLimpa[im].dados[c][i][j] < V_MIN_TRESHOLD)
@@ -59,23 +77,23 @@ double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int i){
 				}
 			}
 		}
-		interseccaoCanais(&outLimpa[im],&outLimpa[im]);
+		interseccaoCanais(&outLimpa[im]);
 		filtroPonto(&outLimpa[im]);
 	}
 	pontoMedio(outLimpa[0],&pos_i);
 	pontoMedio(outLimpa[1],&pos_f);
 	#if SALVA_MODELOS
 		char str[2][MAX];
-		sprintf(str[0],"modelo-%d-1.bmp",i);
-		sprintf(str[1],"modelo-%d-2.bmp",i);
-			for(int i=-2;i<3;i++){
-				for(int j=-2;j<3;j++){
-					outLimpa[0].dados[R][pos_i.y+i][pos_i.x+j]=BRANCO;	//Insere pontos vermelhos nas coordenadas de interesse.
-					outLimpa[0].dados[G][pos_i.y+i][pos_i.x+j]=PRETO;
-					outLimpa[0].dados[B][pos_i.y+i][pos_i.x+j]=PRETO;
-					outLimpa[1].dados[R][pos_f.y+i][pos_f.x+j]=BRANCO;
-					outLimpa[1].dados[G][pos_f.y+i][pos_f.x+j]=PRETO;
-					outLimpa[1].dados[B][pos_f.y+i][pos_f.x+j]=PRETO;
+		sprintf(str[0],"modelo-%d-1.bmp",indice);
+		sprintf(str[1],"modelo-%d-2.bmp",indice);
+			for(k=-2;k<3;k++){
+				for(l=-2;l<3;l++){
+					outLimpa[0].dados[R][pos_i.y+k][pos_i.x+l]=BRANCO;	//Insere pontos vermelhos nas coordenadas de interesse.
+					outLimpa[0].dados[G][pos_i.y+k][pos_i.x+l]=PRETO;
+					outLimpa[0].dados[B][pos_i.y+k][pos_i.x+l]=PRETO;
+					outLimpa[1].dados[R][pos_f.y+k][pos_f.x+l]=BRANCO;
+					outLimpa[1].dados[G][pos_f.y+k][pos_f.x+l]=PRETO;
+					outLimpa[1].dados[B][pos_f.y+k][pos_f.x+l]=PRETO;
 				}
 			}
 		salvaImagem(&outLimpa[0],str[0]);
@@ -85,43 +103,45 @@ double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int i){
 	desalocaDados(&outLimpa[1]);
 	return sqrt( pow(abs(pos_f.x-pos_i.x),2)+ pow(abs(pos_f.y-pos_i.y),2) );
 }
-
-void filtroMedia(Imagem* img, Imagem* out, int winSize){
+/*A função filtroMedia recebe uma imagem e a altera a mesma com uma filtragem de Média,
+* eliminando uma parte dos ruídos da imagem analisada.
+*Parâmetros: Imagem *img:É a struct com os dados da imagem a serem lidos e alterados.
+*	int winSize:Tamanho da janela utilizada no filtro
+*	Valores de retorno:
+*/
+void filtroMedia(Imagem* img, int winSize){
 	int tam=winSize/2;	//Setta o tamanho para pular bordas
+	int canal;
 	unsigned long i,j;
-	for(int canal=0;canal<3;canal++){
-	for(i=tam;i<img->altura-tam;i++){
-		for(j=tam;j<img->largura-tam;j++){
-			out->dados[canal][i][j]=mediaVizinhanca(img,i,j,winSize,canal);
-		}
-	}
-	//preenche as bordas
-	#if SALVA_MODELOS
-		for(i=0;i<tam;i++)
-			for(j=0;j<img->largura;j++)
-				out->dados[canal][i][j]=img->dados[canal][i][j];
+	for(canal=0;canal<3;canal++){
 		for(i=tam;i<img->altura-tam;i++){
-			for(j=0;j<tam;j++)
-				out->dados[canal][i][j]=img->dados[canal][i][j];
-			for(j=img->largura-tam;j<img->largura;j++)
-				out->dados[canal][i][j]=img->dados[canal][i][j];
+			for(j=tam;j<img->largura-tam;j++){
+				img->dados[canal][i][j]=mediaVizinhanca(*img,i,j,winSize,canal);
+			}	
 		}
-		for(i=img->altura-tam;i<img->altura;i++)
-			for(j=0;j<img->largura;j++)
-				out->dados[canal][i][j]=img->dados[canal][i][j];
-		#endif
 	}
 }
-
-int mediaVizinhanca(Imagem* v,int x, int y,int t,int canal){
+/**A função mediaVizinhanca recebe os dados da imagem, a posição de um pixel requisitado,
+* o tamanho da janela e o canal analizado e retorna a media entre os vizinhos desse pixel.
+*Parâmetros: Imagem v:É a struct com os dados da imagem a serem lidos.
+*	int x e int y:É a coordenada x e y onde o pixel analizado se encontra e é requisitado.
+*	int t:É o tamanho da janela que a função irá aplicar a média.
+*	int canal:É o canal analizado.
+*Valores de retorno: Um unsigned char com o valor da média dos vizinhos daquele pixel. 
+*/
+unsigned char mediaVizinhanca(Imagem v,int x, int y,int t,int canal){
 	int media=0,tam=t/2;
 	for(unsigned long i=x-tam;i<=x+tam;i++)
 		for(unsigned long j=y-tam;j<=y+tam;j++)
-			media+=v->dados[canal][i][j];
+			media+=v.dados[canal][i][j];
 	return media/(t*t);
 }
-
-void interseccaoCanais(Imagem* in,Imagem* out){
+/**A função interseccaoCanais recebe os dados da imagem e faz a intersecção entre os canais dessa 
+* imagem, binarizando-a a partir de um limiar entre a media dos 3 canais.
+*Parâmetros: Imagem v:É a struct com os dados da imagem a serem maniplados.
+*Valores de retorno:NENHUM
+*/
+void interseccaoCanais(Imagem* in){
 	for(int i=0;i<in->altura;i++){
 		for(int j=0;j<in->largura;j++){
 			if((in->dados[R][i][j] + in->dados[G][i][j] + in->dados[B][i][j])/3.0 < THRESH_INTER)
@@ -131,7 +151,9 @@ void interseccaoCanais(Imagem* in,Imagem* out){
 		}
 	}
 }
-
+/**
+*
+*/
 void alocaDados(Imagem* x){
 	x->dados=(unsigned char***)malloc(sizeof(unsigned char**)*x->n_canais);
 		for(int i=0;i<x->n_canais;i++){
@@ -140,7 +162,9 @@ void alocaDados(Imagem* x){
 				x->dados[i][j]=(unsigned char*)malloc(sizeof(unsigned char)*x->largura);
 		}
 }
-
+/**
+*
+*/
 void desalocaDados(Imagem* x){
 	for (int i=0;i<x->n_canais;i++){
 			for (unsigned long j=0;j<x->altura;j++)
@@ -149,19 +173,33 @@ void desalocaDados(Imagem* x){
 		}
 		free(x->dados);
 }
-
+/**
+*
+*/
 void filtroPonto(Imagem* img){
-    int i,j;
-    for(i = 0 ; i < img->altura-5 ; i ++){
-        for(j = 0 ; j < img->largura-5 ; j ++){
-            if(img->dados[R][i][j] == BRANCO && img->dados[R][i+1][j+1] == PRETO && img->dados[R][i+2][j+2] && img->dados[R][i+2][j+2] == PRETO && img->dados[R][i+3][j+3] == PRETO && img->dados[R][i+4][j+4] == PRETO){
-                img->dados[R][i][j] = img->dados[G][i][j] = img->dados[B][i][j] = PRETO;
-            }
+    unsigned long i,j;
+    int k,cont;
+    for(i = LIM_PM ; i < img->altura-LIM_PM ; i ++){
+        for(j = LIM_PM ; j < img->largura-LIM_PM ; j ++){
+        	if(img->dados[R][i][j] == BRANCO){
+	        	cont=0;
+	        	for(k=1;k<=LIMITE_PONTO;k++)
+		            if(img->dados[R][i+k][j+k] == PRETO)
+		            	cont++;
+		            if(cont==LIMITE_PONTO)
+		                img->dados[R][i][j] = img->dados[G][i][j] = img->dados[B][i][j] = PRETO;
+        	}
         }
     }
 
 }
-
+/**A função pontoMedio tenta encontrar os pontos iniciais e finais de um blob e
+* com isso calcula a média entre os dois pontos com respeito a suas coordenadas.
+*Parâmetros:Imagem img:É a struct com os dados da imagem a serem lidos.
+*Posicao* pos:É a struct que recebe os dados de posicao do ponto médio do objeto
+* procurado por referência.
+*Valores de retorno:NENHUM
+*/
 void pontoMedio(Imagem img, Posicao* pos){
 	int winSize = JANELA_PM/2;
 	int cont;
@@ -175,10 +213,10 @@ void pontoMedio(Imagem img, Posicao* pos){
 			//janela 1
 			cont=0;
 			for(k=-winSize;k<=winSize && !flag_continuo;k++){
-				for(l=-winSize;l<=winSize && !flag_continuo;l++){	//Se a metade+1 da janela for de brancos, identifica o primeiro ponto
+				for(l=-winSize;l<=winSize && !flag_continuo;l++){	//Se mais da metade+1 da janela for de brancos, identifica o primeiro ponto
 					if(img.dados[R][i+k][j+l] == BRANCO)
 						cont++;
-					if(cont==maximo/2+1){
+					if(cont>maximo/2+1){
 						posQuina[0].x=j;
 						posQuina[0].y=i;
 						flag_continuo=true;
@@ -192,7 +230,7 @@ void pontoMedio(Imagem img, Posicao* pos){
 	for(i=posQuina[0].y;i<img.altura-LIM_PM && !flag_continuo;i++){
 		for(j=posQuina[0].x+1;j<img.largura-LIM_PM && !flag_continuo;j++){
 			//janela2
-			if(janelaPosterior(img,j,i) && janelaPosterior(img,j+1,i) && janelaPosterior(img,j+2,i) && janelaPosterior(img,j+3,i) && janelaPosterior(img,j+3,i)){
+			if(janelaPosterior(img,j,i) && janelaPosterior(img,j+1,i) && janelaPosterior(img,j+2,i)){
 				i++;
 				break;
 			}
@@ -212,7 +250,9 @@ void pontoMedio(Imagem img, Posicao* pos){
 	pos->x=(posQuina[0].x+posQuina[1].x)/2;
 	pos->y=(posQuina[0].y+posQuina[1].y)/2;
 }
-
+/**
+*
+*/
 bool janelaPosterior(Imagem img,unsigned long x,unsigned long y){	//Verfica se todos os pixeis na janela sao brancos, retorna 1 se sim.
 	int winSize=TAM_JANELA/2;
 	int cont=0;
