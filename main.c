@@ -44,10 +44,9 @@ int main ()
 		printf ("Nao conseguiu carregar o gerador!\n");
 		return (1);
 	}
-	int cont2=0,cont5=0,cont20=0,cont100=0,contC=0;
-	int pos2[N_TESTES]={0},pos5[N_TESTES]={0},pos20[N_TESTES]={0},pos100[N_TESTES]={0};
+
     /* Realiza N_TESTES testes. */
-	for (i = 1; i <= N_TESTES; i++)
+	for (i = 0; i < N_TESTES; i++)
 	{
 		printf ("----- Teste %d\n", i);
 
@@ -62,7 +61,7 @@ int main ()
 
 		/* Invoca o testador. */
 		tempo_inicio = clock ();
-		distancia_medida = calculaDistancia (bg, img1, img2,i);
+		distancia_medida = calculaDistancia (bg, img1, img2);
 		tempo_total += clock () - tempo_inicio;
 
 		/* Compara os resultados com o que foi gerado. */
@@ -71,27 +70,13 @@ int main ()
         else
             erro = distancia_real;
         erro_total += erro;
-        if(erro<1)
-        	contC++;
-        else if(erro>=2 && erro<5){
-        	cont2++;pos2[cont2-1]=i;
-        }
-        else if(erro>=5 && erro<20){
-        	cont5++;pos5[cont5-1]=i;
-        }
-        else if(erro>=20 && erro<100){
-        	cont20++;pos20[cont20-1]=i;
-        }
-        else if(erro>=100){
-        	cont100++;pos100[cont100-1]=i;
-        }
 
         if (erro > maior_erro)
         {
             maior_erro = erro;
             pior_teste = i;
         }
-        img1->largura=img2->largura;
+
         printf ("Distancia real: %.2f, Medida: %.2f, Erro: %.2f\n", distancia_real, distancia_medida, erro);
 
 		/* Salva (se necessário). */
@@ -105,6 +90,7 @@ int main ()
 			sprintf (foostring, "teste%d-bg.bmp", i);
 			salvaImagem (bg, foostring);
 		}
+
 		/* Joga fora as imagens geradas. */
 		destroiImagem (img1);
 		destroiImagem (img2);
@@ -115,24 +101,8 @@ int main ()
 	printf ("----------------------------------------\n");
 	printf ("Erro medio: %.2f\n", erro_total / N_TESTES);
 	printf ("Pior teste: %d (erro: %.2f)\n", pior_teste, maior_erro);
-	printf ("Tempo total: %.2f\n", (float)tempo_total/CLOCKS_PER_SEC);
-	printf ("%d erros maiores que 2.\n\tTestes: ",cont2);
-	for(int x=0;pos2[x]!=0;x++)
-		printf("%d ",pos2[x]);
-	printf("\n");
-	printf ("%d erros maiores que 5.\n\tTestes: ",cont5);
-	for(int x=0;pos5[x]!=0;x++)
-		printf("%d ",pos5[x]);
-	printf("\n");
-	printf ("%d erros maiores que 20.\n\tTestes: ",cont20);
-	for(int x=0;pos20[x]!=0;x++)
-		printf("%d ",pos20[x]);
-	printf("\n");
-	printf ("%d erros maiores que 100.\n\tTestes: ",cont100);
-	for(int x=0;pos100[x]!=0;x++)
-		printf("%d ",pos100[x]);
-	printf("\n");
-	printf("%d testes corretos, acuracia: %.2f%\n",contC,((float)contC/N_TESTES)*100);
+	printf ("Tempo total: %d\n", (int) tempo_total);
+
 	/* Final. */
 	destroiGeradorDeTestes (gerador);
 	return (0);

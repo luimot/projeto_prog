@@ -51,14 +51,13 @@ bool janelaPosterior(Imagem img,unsigned long x,unsigned long y);
  *	Imagem* img2:É a segunda struct com as informações da imagem formada.
  *Valor de retorno: Uma double com a distância estimada entre os veículos nas imagens fornecidas.
  */
-double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int indice){
+double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2){
 	Imagem *copia[2]={img1,img2};
 	Posicao pos_i,pos_f;
 	int somaM=0,maior[2];
 	Imagem outLimpa[2];
 	filtroMedia(img1,TAM_JANELA);
 	filtroMedia(img2,TAM_JANELA);
-	//filtroMedia(bg,TAM_JANELA+2);
 	int im,c,k,l;
 	unsigned long i,j;
 	for(im=0;im<2;im++){
@@ -82,10 +81,10 @@ double calculaDistancia (Imagem* bg, Imagem* img1, Imagem* img2,int indice){
 	}
 	pontoMedio(outLimpa[0],&pos_i);
 	pontoMedio(outLimpa[1],&pos_f);
-	#if SALVA_MODELOS
+	#if (SALVA_MODELOS)		//diretiva para compilar o código de salvamento de modelos ou não
 	char str[2][MAX];
-	sprintf(str[0],"modelo-%d-1.bmp",indice);
-	sprintf(str[1],"modelo-%d-2.bmp",indice);
+	sprintf(str[0],"modelo-1.bmp");
+	sprintf(str[1],"modelo-2.bmp");
 	for(k=-2;k<3;k++){
 		for(l=-2;l<3;l++){
 			outLimpa[0].dados[R][pos_i.y+k][pos_i.x+l]=BRANCO;	//Insere pontos vermelhos nas coordenadas de interesse.
@@ -140,22 +139,32 @@ unsigned char mediaVizinhanca(Imagem v,int x, int y,int t,int canal){
 
 /**A função interseccaoCanais recebe os dados da imagem e faz a intersecção entre os canais dessa 
  * imagem, binarizando-a a partir de um limiar entre a media dos 3 canais.
- *Parâmetros: Imagem v:É a struct com os dados da imagem a serem maniplados.
+ *Parâmetros: Imagem* in:É a struct com os dados da imagem a serem maniplados.
  *Valores de retorno:NENHUM
  */
 void interseccaoCanais(Imagem* in){
 	unsigned long i,j;
 	for(i=0;i<in->altura;i++){
 		for(j=0;j<in->largura;j++){
-			if((in->dados[R][i][j] + in->dados[G][i][j] + in->dados[B][i][j])/3.0 < THRESH_INTER)
-				in->dados[R][i][j] = in->dados[G][i][j] = in->dados[B][i][j]=BRANCO;
-			else
-				in->dados[R][i][j] = in->dados[G][i][j] = in->dados[B][i][j]=PRETO;
+			if((in->dados[R][i][j] + in->dados[G][i][j] + in->dados[B][i][j])/3.0 < THRESH_INTER){
+				in->dados[R][i][j] = BRANCO;
+				#if SALVA_MODELOS
+				in->dados[G][i][j] = in->dados[B][i][j]=BRANCO;
+				#endif
+			}
+			else{
+				in->dados[R][i][j] = PRETO;
+				#if SALVA_MODELOS
+					in->dados[G][i][j] = in->dados[B][i][j]= PRETO;
+				#endif
+			}
 		}
 	}
 }
-/**
- * 
+/**A função alocaDados recebe o ponteiro de Imagem para alocá-lo na memória e retornar por 
+ *	referência de acordo com a necessidade.
+ *Parâmetros: Imagem* x:É o ponteiro de imagem para alocamento.
+ *Valores de retorno: NENHUM
  */
 void alocaDados(Imagem* x){
 	int i;
@@ -167,8 +176,10 @@ void alocaDados(Imagem* x){
 			x->dados[i][j]=(unsigned char*)malloc(sizeof(unsigned char)*x->largura);
 	}
 }
-/**
- * 
+/**A função desalocaDados recebe por parâmetro, o ponteiro de Imagem para desalocar todos
+ *	seus ponteiros e ponteiros de ponteiros, etc.
+ *Parâmetros: Imagem *x:É o ponteiro da imagem para desalocar
+ *Valor de retorno:NENHUM.
  */
 void desalocaDados(Imagem* x){
 	int i;
@@ -180,8 +191,11 @@ void desalocaDados(Imagem* x){
 	}
 	free(x->dados);
 }
-/**
- * 
+/**A função filtroPonto recebe a imagem e filtra certos pixels e pequenos blobs
+ *	"errantes" que dificultam a medição. 
+ *Parâmetros: Imagem *img: É a struct contendo os dados da imagem a serem filtrados e 
+ *	que serão alterados.
+ *Valores de retorno:NENHUM.
  */
 void filtroPonto(Imagem* img){
 	unsigned long i,j;
@@ -191,7 +205,7 @@ void filtroPonto(Imagem* img){
 			if(img->dados[R][i][j] == BRANCO){
 				cont=0;
 				for(k=1;k<=LIMITE_PONTO;k++)
-					if(img->dados[R][i+k][j+k] == PRETO)
+					if(img->dados[R][i+k][j+k] == PRETO)		
 						cont++;
 					if(cont==LIMITE_PONTO)
 						img->dados[R][i][j] = img->dados[G][i][j] = img->dados[B][i][j] = PRETO;
@@ -217,7 +231,7 @@ void pontoMedio(Imagem img, Posicao* pos){
 	int k,l;
 	for(i=LIM_PM;i<img.altura-LIM_PM && !flag_continuo;i++){
 		for(j=LIM_PM;j<img.largura-LIM_PM && !flag_continuo;j++){
-			//janela 1
+			//Janela 1
 			cont=0;
 			for(k=-winSize;k<=winSize && !flag_continuo;k++){
 				for(l=-winSize;l<=winSize && !flag_continuo;l++){	//Se mais da metade+1 da janela for de brancos, identifica o primeiro ponto
@@ -227,7 +241,6 @@ void pontoMedio(Imagem img, Posicao* pos){
 						posQuina[0].x=j;
 						posQuina[0].y=i;
 						flag_continuo=true;
-						break;
 					}
 				}
 			}
@@ -236,7 +249,7 @@ void pontoMedio(Imagem img, Posicao* pos){
 	flag_continuo=false;
 	for(i=posQuina[0].y;i<img.altura-LIM_PM && !flag_continuo;i++){
 		for(j=posQuina[0].x+1;j<img.largura-LIM_PM && !flag_continuo;j++){
-			//janela2
+			//Janela2
 			if(janelaPosterior(img,j,i) && janelaPosterior(img,j+1,i) && janelaPosterior(img,j+2,i)){
 				i++;
 				break;
@@ -257,8 +270,13 @@ void pontoMedio(Imagem img, Posicao* pos){
 	pos->x=(posQuina[0].x+posQuina[1].x)/2;
 	pos->y=(posQuina[0].y+posQuina[1].y)/2;
 }
-/**
- * 
+/**A função janelaPosterior é útil para facilitar a implementação da função pontoMedio
+ *	verificando se certos pixels têm a vizinhança com considerável número de brancos.
+ *Parâmetros:Imagem img:É a struct que contém os dados a serem analisados
+ *	unsigned long x e unsigned long y:São as coordenadas x e y na imagem que foram 
+ *	requisitadas para análise.
+ *Valor de retorno: Boolean, se todas forem majoritariamente com pixels brancos, true, 
+ *	senão, false.
  */
 bool janelaPosterior(Imagem img,unsigned long x,unsigned long y){	//Verfica se todos os pixeis na janela sao brancos, retorna 1 se sim.
 	int winSize=TAM_JANELA/2;

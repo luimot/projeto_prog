@@ -1,0 +1,14 @@
+exec: gerador_de_testes.o main.o trabalho3.o imagem.o
+	gcc gerador_de_testes.o main.o trabalho3.o imagem.o -lm -o exec
+
+gerador_de_testes.o: gerador_de_testes.c
+	gcc -lm -c gerador_de_testes.c
+
+main.o: main.c
+	gcc -lm -c main.c
+
+trabalho3.o: trabalho3.c
+	gcc -lm -c trabalho3.c
+
+imagem.o: imagem.c
+	gcc -lm -c imagem.c
